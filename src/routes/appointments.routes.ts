@@ -6,6 +6,8 @@ import AppointmentRepository from '../repositories/AppointmentsRepository';
 const appointmentsRouter = Router();
 const appointmentsRepository = new AppointmentRepository();
 
+// SoC: Separation of Concerns (Separação de preocupações)
+
 appointmentsRouter.get('/', (request, response) => {
   const appointments = appointmentsRepository.all();
 
@@ -25,7 +27,10 @@ appointmentsRouter.post('/', (request, response) => {
       .json({ message: 'This appointment is already booked' })
   }
 
-  const appointment = appointmentsRepository.create(provider, parsedDate);
+  const appointment = appointmentsRepository.create({
+    provider,
+    date: parsedDate
+  });
 
   return response.json(appointment);
 })
